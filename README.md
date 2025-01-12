@@ -1,18 +1,11 @@
 # Food Delivery Website
 
-Welcome to the Food Delivery Website repository created by G.Vignesh! 🍽️
+Welcome to the Food Delivery Website repository.🍽️
 
 ## Description
 
-This project is a dynamic and user-friendly food delivery website developed using HTML, CSS, and JavaScript. It offers an immersive experience for users to browse, select, and order from a wide range of culinary options.
+This project is a dynamic and user-friendly food delivery website developed using HTML, CSS, Bootstrap and JavaScript. It offers an immersive experience for users to browse, select, and order from a wide range of culinary options.
 
-## Screenshots
-![image](https://github.com/Sweety-Vigneshg/Food-Delivery-Website/blob/f3471fcfa680d8dbebc8ccb3ab69bda7588d9413/Sample/food%20delivery%20website%20home.png)
-![image](https://github.com/Sweety-Vigneshg/Food-Delivery-Website/blob/f3471fcfa680d8dbebc8ccb3ab69bda7588d9413/Sample/food%20delivery%20website%20special.png)
-![image](https://github.com/Sweety-Vigneshg/Food-Delivery-Website/blob/f3471fcfa680d8dbebc8ccb3ab69bda7588d9413/Sample/food%20delivery%20website%20gallery.png)
-![image](https://github.com/Sweety-Vigneshg/Food-Delivery-Website/blob/f3471fcfa680d8dbebc8ccb3ab69bda7588d9413/Sample/food%20delivery%20website%20review.png)
-![image](https://github.com/Sweety-Vigneshg/Food-Delivery-Website/blob/f3471fcfa680d8dbebc8ccb3ab69bda7588d9413/Sample/food%20delivery%20website%20footerorders.png)
-![image](https://github.com/Sweety-Vigneshg/Food-Delivery-Website/blob/f3471fcfa680d8dbebc8ccb3ab69bda7588d9413/Sample/food%20delivery%20website%20footer.png)
 
 ## Features
 
@@ -28,6 +21,7 @@ This project is a dynamic and user-friendly food delivery website developed usin
 
 - HTML
 - CSS
+- Bootstrap
 - JavaScript
 
 ## Usage
