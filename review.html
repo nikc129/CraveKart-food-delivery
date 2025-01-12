@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery Review</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-yellow-500 text-white py-4 shadow-md">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">CraveKart</h1>
+            <nav>
+                <a href="index.html" class="text-lg px-4 hover:underline">Home</a>
+                <a href="#order" class="text-lg px-4 hover:underline">Orders</a>
+                <a href="#" class="text-lg px-4 hover:underline">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h2 class="text-3xl font-semibold text-gray-800 mb-6">Your Delivered Items</h2>
+        
+        <!-- Food Items -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white shadow-md rounded-lg p-4">
+                <img src="images/pizza.png" alt="Food Item" class="w-full h-40 object-cover rounded">
+                <h3 class="text-xl font-semibold mt-4">Margherita Pizza</h3>
+                <p class="text-gray-600 mt-2">Delivered on: 10th Dec 2024</p>
+                <form class="mt-4 feedback-form">
+                    <label for="rating1" class="block text-gray-700 font-medium">Your Rating:</label>
+                    <select id="rating1" class="block w-full p-2 border rounded mt-2">
+                        <option value="">Select Rating</option>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Good</option>
+                        <option value="3">3 - Average</option>
+                        <option value="2">2 - Poor</option>
+                        <option value="1">1 - Terrible</option>
+                    </select>
+                    <label for="feedback1" class="block text-gray-700 font-medium mt-4">Your Feedback:</label>
+                    <textarea id="feedback1" rows="3" class="block w-full p-2 border rounded mt-2"></textarea>
+                    <button type="submit" class="bg-yellow-500 text-white px-4 py-2 mt-4 rounded hover:bg-yellow-600">
+                        Submit Feedback
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Repeat for other items -->
+            <div class="bg-white shadow-md rounded-lg p-4">
+                <img src="images/spagetti" alt="Food Item" class="w-full h-40 object-cover rounded">
+                <h3 class="text-xl font-semibold mt-4">Spaghetti Carbonara</h3>
+                <p class="text-gray-600 mt-2">Delivered on: 9th Dec 2024</p>
+                <form class="mt-4 feedback-form">
+                    <label for="rating2" class="block text-gray-700 font-medium">Your Rating:</label>
+                    <select id="rating2" class="block w-full p-2 border rounded mt-2">
+                        <option value="">Select Rating</option>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Good</option>
+                        <option value="3">3 - Average</option>
+                        <option value="2">2 - Poor</option>
+                        <option value="1">1 - Terrible</option>
+                    </select>
+                    <label for="feedback2" class="block text-gray-700 font-medium mt-4">Your Feedback:</label>
+                    <textarea id="feedback2" rows="3" class="block w-full p-2 border rounded mt-2"></textarea>
+                    <button type="submit" class="bg-yellow-500 text-white px-4 py-2 mt-4 rounded hover:bg-yellow-600">
+                        Submit Feedback
+                    </button>
+                </form>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg p-4">
+                <img src="images/soup" alt="Food Item" class="w-full h-40 object-cover rounded">
+                <h3 class="text-xl font-semibold mt-4"> Corn Soup</h3>
+                <p class="text-gray-600 mt-2">Delivered on: 10th Dec 2024</p>
+                <form class="mt-4 feedback-form">
+                    <label for="rating1" class="block text-gray-700 font-medium">Your Rating:</label>
+                    <select id="rating1" class="block w-full p-2 border rounded mt-2">
+                        <option value="">Select Rating</option>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Good</option>
+                        <option value="3">3 - Average</option>
+                        <option value="2">2 - Poor</option>
+                        <option value="1">1 - Terrible</option>
+                    </select>
+                    <label for="feedback1" class="block text-gray-700 font-medium mt-4">Your Feedback:</label>
+                    <textarea id="feedback1" rows="3" class="block w-full p-2 border rounded mt-2"></textarea>
+                    <button type="submit" class="bg-yellow-500 text-white px-4 py-2 mt-4 rounded hover:bg-yellow-600">
+                        Submit Feedback
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-4 mt-8">
+        <p>&copy; 2024 Foodie's Delight. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.feedback-form').forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                alert('Thank you for your feedback!');
+            });
+        });
+    </script>
+</body>
+</html>
