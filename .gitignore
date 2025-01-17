@@ -1,0 +1,42 @@
+# Node.js
+/node_modules/
+/npm-debug.log
+/yarn-error.log
+
+# .env file
+.env
+
+# Logs
+*.log
+logs/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Build directories
+/dist/
+/build/
+
+# Dependency directories
+/bower_components/
+
+# Test directories
+/coverage/
+*.lcov
+
+# Temporary files
+*.swp
+*.swo
+
+# Yarn Lock file (if not using Yarn)
+yarn.lock
+
+# NPM Lock file (if not using NPM)
+package-lock.json

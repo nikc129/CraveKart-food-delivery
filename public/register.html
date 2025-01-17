@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register & Login</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background-color: #f7f7f7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        background: #fff;
+        width: 450px;
+        padding: 2rem;
+        margin: 50px auto;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      h1.form-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 1.2rem;
+        color: #333;
+      }
+
+      input {
+        color: #333;
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        border-bottom: 2px solid #ccc;
+        padding: 10px 15px;
+        font-size: 16px;
+        margin: 10px 0;
+        transition: border 0.3s ease;
+      }
+
+      input:focus {
+        border-color: #ff7e5f;
+        outline: none;
+      }
+
+      input::placeholder {
+        color: transparent;
+      }
+
+      label {
+        position: absolute;
+        top: -18px;
+        left: 15px;
+        font-size: 14px;
+        color: #999;
+        transition: 0.3s ease all;
+      }
+
+      input:focus ~ label,
+      input:not(:placeholder-shown) ~ label {
+        top: -28px;
+        color: #ff7e5f;
+        font-size: 13px;
+      }
+
+      .input-group {
+        position: relative;
+        margin-bottom: 20px;
+      }
+
+      .input-group i {
+        position: absolute;
+        color: #757575;
+        top: 15px;
+        left: 10px;
+        font-size: 18px;
+      }
+
+      .recover {
+        text-align: right;
+        font-size: 14px;
+        margin-top: -10px;
+      }
+
+      .recover a {
+        text-decoration: none;
+        color: #ff7e5f;
+        transition: color 0.3s ease;
+      }
+
+      .recover a:hover {
+        color: #ff6f61;
+      }
+
+      .btn {
+        font-size: 1.1rem;
+        padding: 12px 0;
+        border-radius: 5px;
+        width: 100%;
+        background: #ff7e5f;
+        color: white;
+        cursor: pointer;
+        border: none;
+        transition: 0.3s ease;
+        margin-top: 20px;
+      }
+
+      .btn:hover {
+        background: #ff6f61;
+      }
+
+      .or {
+        font-size: 1rem;
+        margin-top: 20px;
+        text-align: center;
+        color: #555;
+      }
+
+      .icons {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .icons i {
+        color: #fff;
+        background-color: #ff7e5f;
+        padding: 12px;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        margin: 0 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .icons i:hover {
+        transform: scale(1.1);
+        background-color: #ff6f61;
+      }
+
+      .links {
+        display: flex;
+        justify-content: space-around;
+        padding: 20px 0;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+
+      .links p {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .links button {
+        color: #ff7e5f;
+        background-color: transparent;
+        font-size: 14px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .links button:hover {
+        color: #ff6f61;
+      }
+
+      .home {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .home a {
+        text-decoration: none;
+        color: #ff7e5f;
+        font-weight: bold;
+      }
+
+      .home a:hover {
+        color: #ff6f61;
+        text-decoration: underline;
+      }
+
+      button {
+        background-color: transparent;
+        border: none;
+        font-size: 1rem;
+        color: #ff7e5f;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      button:hover {
+        color: #ff6f61;
+        text-decoration: underline;
+      }
+
+      /* Hide the second form by default */
+      #signIn {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="signup">
+      <h1 class="form-title">Register</h1>
+      <form method="post" action="register.php">
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            name="fName"
+            id="fName"
+            placeholder="First Name"
+            required
+          />
+          <label for="fname">First Name</label>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            name="lName"
+            id="lName"
+            placeholder="Last Name"
+            required
+          />
+          <label for="lName">Last Name</label>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            required
+          />
+          <label for="email">Email</label>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <label for="password">Password</label>
+        </div>
+        <input type="submit" class="btn" value="Sign Up" name="signUp" />
+      </form>
+
+      <div class="links">
+        <p>Already Have Account?</p>
+        <button id="signInButton">Sign In</button>
+      </div>
+    </div>
+
+    <div class="container" id="signIn">
+      <h1 class="form-title">Sign In</h1>
+      <form method="post" action="/register">
+        <div class="input-group">
+          <i class="fas fa-envelope"> </i>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            required
+          />
+          <label for="email">Email</label>
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+          <label for="password">Password</label>
+        </div>
+        <input type="submit" class="btn" value="Sign In" name="signIn" />
+      </form>
+
+      <div class="links">
+        <p>Don't have account yet?</p>
+        <button id="signUpButton">Sign Up</button>
+      </div>
+      <div class="home">
+        <a href="/Food-Delivery-Website/index.html"> Home</a>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("signInButton").addEventListener("click", function () {
+        document.getElementById("signup").style.display = "none";
+        document.getElementById("signIn").style.display = "block";
+      });
+
+      document.getElementById("signUpButton").addEventListener("click", function () {
+        document.getElementById("signIn").style.display = "none";
+        document.getElementById("signup").style.display = "block";
+      });
+    </script>
+  </body>
+</html>
