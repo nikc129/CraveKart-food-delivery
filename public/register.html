@@ -220,23 +220,23 @@
   <body>
     <div class="container" id="signup">
       <h1 class="form-title">Register</h1>
-      <form method="post" action="register.php">
+      <form method="post" action="/register">
         <div class="input-group">
           <i class="fas fa-user"></i>
           <input
             type="text"
-            name="fName"
+            name="first_name"
             id="fName"
             placeholder="First Name"
             required
           />
-          <label for="fname">First Name</label>
+          <label for="fName">First Name</label>
         </div>
         <div class="input-group">
           <i class="fas fa-user"></i>
           <input
             type="text"
-            name="lName"
+            name="last_name"
             id="lName"
             placeholder="Last Name"
             required
@@ -267,6 +267,7 @@
         </div>
         <input type="submit" class="btn" value="Sign Up" name="signUp" />
       </form>
+      
 
       <div class="links">
         <p>Already Have Account?</p>
@@ -276,7 +277,7 @@
 
     <div class="container" id="signIn">
       <h1 class="form-title">Sign In</h1>
-      <form method="post" action="/register">
+      <form method="post" action="/login">
         <div class="input-group">
           <i class="fas fa-envelope"> </i>
           <input
