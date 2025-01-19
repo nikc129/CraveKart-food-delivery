@@ -232,7 +232,8 @@ app.get("/delivery",async(req,res)=>{
   res.render("delivery")
 })
 app.get("/payment",async(req,res)=>{
-  res.render("payment")
+  console.log("first")
+  res.sendFile(path.join(__dirname, 'views', 'payment.html'));
 })
 
 // Start the server
