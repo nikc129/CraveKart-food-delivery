@@ -7,6 +7,7 @@ const path = require('path');
 
 const app = express();
 const port = 3000;
+app.set('view engine', 'ejs');
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -23,22 +24,43 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+
+// Restaurant Schema
+const restaurantSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  image: { type: String, required: true },
+  menu: [ {
+    name: { type: String, required: true },
+    image: { type: String, required: true },
+    price: { type: Number, required: true },
+    description: { type: String, required: true },
+    rating: { type: Number },
+  }],
+  reviews: { type: Number }, // Add review functionality if needed
+  comments: [{ type: String }], // Add comment functionality if needed
+   
+});
+
+const Restaurant = mongoose.model('Restaurant', restaurantSchema);
+
 // Middleware
 app.use(express.urlencoded({ extended: true })); // Parses URL-encoded bodies
 app.use(express.json()); // Parses JSON bodies
 
-
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Home route ("/") - Sends index.html from 'public' folder
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));  // Sends the index.html file
-});
-
-// Review route ("/review") - Sends review.html from 'public' folder
-app.get('/review', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'review.html'));  // Sends the review.html file
+app.get('/', async (req, res) => {
+  try {
+    // Use aggregation to structure the output as needed
+    const restaurantdata = await Restaurant.find();
+    
+    // Pass the filtered data to the view
+    res.render('index', { restaurantdata });
+  } catch (error) {
+    console.error('Error fetching restaurant data:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 // Register route ("/register") - Serve the register.html page when accessed via GET
@@ -49,7 +71,7 @@ app.get('/register', (req, res) => {
 // Register route ("/register") - Handle user registration via POST
 app.post('/register', async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
-  console.log(req.body)
+ // console.log(req.body)
   try {
     const hashedPassword = password; // Replace with actual hashing logic
     const newUser = new User({ first_name, last_name, email, password: hashedPassword });
@@ -74,7 +96,7 @@ app.post('/login', async (req, res) => {
     }
 
     // Compare the password
-    const isMatch = password== user.password;
+    const isMatch = password == user.password;
 
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
@@ -94,6 +116,124 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+// Add a new restaurant route (for testing purposes)
+// app.get('/addRestaurant', async (req, res) => {
+//   const { name, image, menu, reviews, comments, rating } =   {
+//     name: 'Foodie Paradise',
+//     image: 'https://example.com/restaurant-image.jpg',
+//     menu: [
+//       {
+//         name: 'Cheeseburger',
+//         image: 'https://example.com/cheeseburger.jpg',
+//         price: 9.99,
+//         description: 'A delicious cheeseburger with fresh toppings and a juicy patty.',
+//         rating: 4.5,
+//       },
+//       {
+//         name: 'Margherita Pizza',
+//         image: 'https://example.com/margherita-pizza.jpg',
+//         price: 12.99,
+//         description: 'Classic Margherita pizza with mozzarella, basil, and tomato.',
+//         rating: 4.7,
+//       },
+//       {
+//         name: 'Spaghetti Bolognese',
+//         image: 'https://example.com/spaghetti-bolognese.jpg',
+//         price: 14.49,
+//         description: 'A savory Bolognese sauce served with freshly made spaghetti.',
+//         rating: 4.2,
+//       },
+//     ],
+//     reviews: 4.5, // Average rating (calculated by your application)
+//     comments: [
+//       'Best cheeseburger I have ever had!',
+//       'The pizza was so delicious, will definitely come back!',
+//       'Great service and amazing food.',
+//     ],
+//   };
+
+//   try {
+//     const newRestaurant = new Restaurant({ name, image, menu, reviews, comments, rating });
+//     await newRestaurant.save();
+//     res.status(201).json({ message: 'Restaurant added successfully', restaurant: newRestaurant });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: 'Server error', error: err });
+//   }
+// });
+
+// Get all restaurants route (for testing purposes)
+app.get('/restaurants', async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find();
+    res.status(200).json({ restaurants });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error', error: err });
+  }
+});
+app.get('/review/:id', async (req, res) => {
+  const { id } = req.params; // Extract the 'id' parameter from req.params
+  try {
+    const restaurantinfo = await Restaurant.findById(id);
+    console.log(restaurantinfo);
+    res.render('review', { restaurantinfo });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error fetching restaurant info');
+  }
+});
+
+app.post('/review/:id', async (req, res) => {
+  const { rating, comment } = req.body; // Extract rating and comment from the form submission
+  const { id } = req.params; // Restaurant ID from URL
+
+  try {
+      // Find the restaurant by ID
+      const restaurant = await Restaurant.findById(id);
+
+      if (!restaurant) {
+          return res.status(404).send('Restaurant not found');
+      }
+
+      // Ensure the rating is a valid number between 1 and 5
+      const parsedRating = parseFloat(rating);
+      console.log(rating,comment)
+      if (isNaN(parsedRating) || parsedRating < 1 || parsedRating > 5) {
+          return res.status(400).send('Invalid rating. Please submit a rating between 1 and 5.');
+      }
+
+      // If the restaurant already has a rating, calculate the new average rating
+      if (restaurant.reviews !== undefined) {
+          const currentAvgRating = restaurant.reviews;
+          const newAvgRating = (currentAvgRating + parsedRating) / 2; // For simplicity, we take the average of the old and new ratings
+          restaurant.reviews = newAvgRating.toFixed(1); // Update the average rating, rounded to 1 decimal place
+      } else {
+          // If no existing rating, just set the new rating
+          restaurant.reviews = parsedRating.toFixed(1);
+      }
+
+      // Add the new comment
+      restaurant.comments.push(comment);
+
+      // Save changes to the restaurant
+      await restaurant.save();
+
+      // Redirect to the restaurant's review page
+      res.redirect(`/review/${id}`);
+  } catch (error) {
+      console.error(error);
+      res.status(500).send('Error updating review and comment');
+  }
+});
+
+app.get("/delivery",async(req,res)=>{
+  res.render("delivery")
+})
+app.get("/payment",async(req,res)=>{
+  res.render("payment")
+})
 
 // Start the server
 app.listen(port, () => {

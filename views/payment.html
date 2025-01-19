@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Payment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .payment-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .qr-code {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h1>Payment Page</h1>
+        <form id="paymentForm" onsubmit="handlePayment(event)">
+            <input type="text" name="cardNumber" placeholder="Card Number" required maxlength="16">
+            <input type="text" name="cardHolder" placeholder="Card Holder Name" required>
+            <input type="text" name="expiry" placeholder="Expiry Date (MM/YY)" required maxlength="5">
+            <input type="text" name="cvv" placeholder="CVV" required maxlength="3">
+            <button type="submit">Pay Now</button>
+        </form>
+        <div class="qr-code" id="qrCode"></div>
+    </div>
+
+    <script>
+        function handlePayment(event) {
+            event.preventDefault();
+            const qrCodeDiv = document.getElementById("qrCode");
+            qrCodeDiv.innerHTML = `
+                <p>Scan this QR Code for confirmation:</p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?data=Payment%20Successful!&size=150x150" alt="QR Code">
+            `;
+            alert("Payment details submitted successfully!");
+        }
+    </script>
+</body>
+</html>

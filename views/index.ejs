@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CraveKart</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <style>
+      :root {
+        --red: #540606;
+      }
+
+      * {
+        font-family: "Nunito", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        outline: none;
+        border: none;
+        text-decoration: none;
+        text-transform: capitalize;
+        transition: all 0.2s linear;
+      }
+
+      *::selection {
+        background: var(--red);
+        color: #fff;
+      }
+
+      html {
+        font-size: 62.5%;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        scroll-padding-top: 6rem;
+      }
+
+      body {
+        /* background: #f7f7f7; */
+        background: #e08d08;
+      }
+
+      section {
+        padding: 2rem 9%;
+      }
+
+      .heading {
+        text-align: center;
+        font-size: 3.5rem;
+        padding: 1rem;
+        color: #666;
+      }
+
+      .heading span {
+        color: var(--red);
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 2rem 9%;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 0.8rem 3rem;
+        border: 0.2rem solid var(--red);
+        color: var(--red);
+        cursor: pointer;
+        font-size: 1.7rem;
+        border-radius: 0.5rem;
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+        margin-top: 1rem;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 0%;
+        height: 100%;
+        background: var(--red);
+        transition: 0.3s linear;
+        z-index: -1;
+      }
+
+      .btn:hover::before {
+        width: 100%;
+        left: 0;
+      }
+
+      .btn:hover {
+        color: #fff;
+      }
+
+      .btn0 {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #ffffff;
+        background-color: #c0492b;
+        border: 2px solid #c0492b;
+        border-radius: 5px;
+      }
+
+      header .logo {
+        font-size: 2.5rem;
+        font-weight: bolder;
+        color: #666;
+      }
+
+      header .logo i {
+        padding-right: 0.5rem;
+        color: var(--red);
+      }
+
+      header .navbar a {
+        font-size: 2rem;
+        margin-left: 2rem;
+        color: #666;
+      }
+
+      header .navbar a:hover {
+        color: var(--red);
+      }
+
+      #menu-bar {
+        font-size: 3rem;
+        cursor: pointer;
+        color: #666;
+        border: 0.1rem solid #666;
+        border-radius: 0.3rem;
+        padding: 0.5rem 1.5rem;
+        display: none;
+      }
+
+      .home {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        min-height: 100vh;
+        align-items: center;
+        background: url(./images/home-bg.jpg) no-repeat;
+        background-size: cover;
+        background-position: center;
+      }
+
+      .home .content {
+        flex: 1 1 40rem;
+        padding-top: 6.5rem;
+      }
+
+      .home .image {
+        flex: 1 1 40rem;
+      }
+
+      .home .image img {
+        width: 100%;
+        animation: float 3s linear infinite;
+      }
+
+      .content h3 {
+        font-size: 8rem;
+        color: #333;
+        font-size: 50px;
+      }
+      .content {
+        margin-top: 116px;
+        text-align: center;
+      }
+
+      .content p {
+        font-size: 1.7rem;
+        color: #666;
+        padding: 1rem 0;
+      }
+
+      .speciality .box-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+
+      .speciality .box-container .box {
+        flex: 1 1 40rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        border: 0.1rem solid rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        border-radius: 0.5rem;
+      }
+
+      .speciality .box-container .box .image {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: -100%;
+        left: 0;
+      }
+
+      .speciality .box-container .box .content {
+        text-align: center;
+        background: #fff;
+        padding: 2rem;
+      }
+
+      .speciality .box-container .box .content img {
+        margin: 1.5rem 0;
+      }
+
+      .speciality .box-container .box .content h3 {
+        font-size: 2.5rem;
+        color: #333;
+      }
+
+      .speciality .box-container .box .content p {
+        font-size: 1.6rem;
+        color: #666;
+        padding: 1rem 0;
+      }
+
+      .speciality .box-container .box:hover .image {
+        top: 0;
+      }
+
+      .speciality .box-container .box:hover .content {
+        transform: translateY(100%);
+      }
+
+      .popular .box-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+
+      .popular .box-container .box {
+        padding: 2rem;
+        background: #fff;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        border: 0.1rem solid rgba(0, 0, 0, 0.3);
+        border-radius: 0.5rem;
+        text-align: center;
+        flex: 1 1 40rem;
+        position: relative;
+      }
+
+      .popular .box-container .box img {
+        height: 25rem;
+        object-fit: cover;
+        width: 100%;
+        border-radius: 0.5rem;
+      }
+
+      .popular .box-container .box .price {
+        position: absolute;
+        top: 3rem;
+        left: 3rem;
+        background: var(--red);
+        color: #fff;
+        font-size: 2rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+      }
+
+      .popular .box-container .box h3 {
+        color: #333;
+        font-size: 2.5rem;
+        padding-top: 1rem;
+      }
+
+      .popular .box-container .box .stars i {
+        color: gold;
+        font-size: 1.7rem;
+        padding: 1rem 0.1rem;
+      }
+
+      .steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        padding: 1rem;
+      }
+
+      .steps .box {
+        flex: 1 1 25rem;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .steps .box img {
+        border-radius: 50%;
+        border: 1rem solid #fff;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+      }
+
+      .steps .box h3 {
+        font-size: 3rem;
+        color: #333;
+        padding: 1rem;
+      }
+
+      .gallery .box-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+
+      .gallery .box-container .box {
+        height: 25rem;
+        flex: 1 1 40rem;
+        border: 1rem solid #fff;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        border-radius: 0.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .gallery .box-container .box img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .gallery .box-container .box .content {
+        position: absolute;
+        top: -100%;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(225, 225, 225, 0.9);
+        padding: 2rem;
+        padding-top: 5rem;
+        text-align: center;
+      }
+
+      .gallery .box-container .box .content h3 {
+        font-size: 2.5rem;
+        color: #333;
+      }
+
+      .gallery .box-container .box .content p {
+        font-size: 1.5rem;
+        color: #666;
+        padding: 1rem 0;
+      }
+
+      .gallery .box-container .box:hover .content {
+        top: 0;
+      }
+
+      .review .box-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+      }
+
+      .review .box-container .box {
+        text-align: center;
+        padding: 2rem;
+        border: 1rem solid #fff;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+        border-radius: 0.5rem;
+        flex: 1 1 30rem;
+        background: #045372;
+        margin-top: 6rem;
+      }
+
+      .review .box-container .box img {
+        height: 12rem;
+        width: 12rem;
+        border-radius: 50%;
+        border: 1rem solid #fff;
+        margin-top: -8rem;
+        object-fit: cover;
+      }
+
+      .review .box-container .box h3 {
+        font-size: 2.5rem;
+        color: #fff;
+        padding: 0.5rem 0;
+      }
+
+      .review .box-container .box .stars i {
+        font-size: 2rem;
+        color: var(--red);
+        padding: 0.5rem 0;
+      }
+
+      .review .box-container .box p {
+        font-size: 1.7rem;
+        color: #eee;
+        padding: 1rem 0;
+      }
+
+      .order .row {
+        padding: 2rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        background: #fff;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        border-radius: 0.5rem;
+        width: 1000px;
+        margin-left: 160px;
+      }
+
+      .order .row form {
+        flex: 1 1 50rem;
+        padding: 1rem;
+      }
+
+      .order .row form .inputBox {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .order .row form .inputBox input,
+      .order .row form textarea {
+        padding: 1rem;
+        margin: 1rem 0;
+        font-size: 1.7rem;
+        color: #333;
+        text-transform: none;
+        border: 0.1rem solid rgba(0, 0, 0, 0.3);
+        border-radius: 0.5rem;
+        width: 100%;
+      }
+
+      .order .row form textarea {
+        resize: none;
+        height: 15rem;
+      }
+      .order .row form .btn0 {
+        cursor: pointer;
+        margin-left: 360px;
+        margin-top: 20px;
+        width: 240px;
+      }
+
+      .footer {
+        /* background-color: #f8f9fa; */
+        background: #d9a249;
+        color: #333;
+        padding: 50px 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .footer .credit {
+        padding: 2.5rem 1rem;
+        color: #000000;
+        font-weight: normal;
+        font-size: 2rem;
+        text-align: center;
+      }
+
+      .footer .credit span {
+        color: #0e21ce;
+      }
+
+      .container {
+        display: flex;
+        justify-content: space-around;
+        max-width: 1200px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+      }
+
+      .footer-content {
+        flex: 1;
+        padding: 0 20px;
+        text-decoration: none;
+      }
+
+      .footer-content h3 {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      .footer-content ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .footer-content ul li {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .footer-content ul li a {
+        text-decoration: none;
+        color: #333;
+        transition: color 0.3s ease;
+      }
+
+      .footer-content ul li a:hover {
+        color: #e08d08;
+      }
+
+      .social-icons {
+        display: flex;
+        padding: 0;
+        justify-content: space-between;
+      }
+      .social-icons li {
+        margin-right: 10px;
+        list-style: none;
+      }
+
+      .social-icons a {
+        color: #333;
+        font-size: 24px;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .social-icons a:hover {
+        color: #e08d08;
+      }
+
+      #scroll-top {
+        position: fixed;
+        top: -120%;
+        right: 2rem;
+        padding: 0.5rem 1.5rem;
+        font-size: 4rem;
+        background: var(--red);
+        color: #ffffff;
+        border-radius: 0.5rem;
+        transition: 0.5s linear;
+        z-index: 1000;
+      }
+
+      #scroll-top.active {
+        top: calc(100% - 12rem);
+      }
+
+      .loader-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10000;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+      }
+
+      .loader-container.fade-out {
+        top: -120%;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0rem);
+        }
+
+        50% {
+          transform: translateY(3rem);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <a href="#" class="logo"><i class="fas fa-utensils"></i>food</a>
+
+      <div id="menu-bar" class="fas fa-bars"></div>
+
+      <nav class="navbar">
+        <!--<a href="#special">specials</a>-->
+        <a href="#popular">best sellers</a>
+        <a href="#gallery">food gallery</a>
+        <a href="review.html">customer reviews</a>
+        <a href="#order"><button class="btn0">Order Now</button></a>
+
+        <a href="/login/register.html"> Register</a>
+      </nav>
+    </header>
+    <div class="content">
+      <h3>CraveKart</h3>
+
+      <a href="#order" class="btn">order now</a>
+    </div>
+
+    <section class="home" id="home">
+      <div class="image">
+        <img src="./images/newfoodpic.jpg" alt="" />
+      </div>
+    </section>
+
+    <section class="speciality" id="speciality">
+      <h1 class="heading">our's <span>special</span></h1>
+
+      <div class="box-container">
+        <div class="box">
+          <img class="image" src="./images/s-img-1.jpg" alt="" />
+          <div class="content">
+            <img src="./images/s-1.png" alt="" />
+            <h3>tasty burger</h3>
+            <p>
+              <span
+                >in our Tasty Burger, a perfect blend of succulent, premium
+                beef, fresh, crisp vegetables, and our signature sauce, all
+                nestled in a perfectly toasted bun. Each bite promises a burst
+                of mouthwatering flavors that will leave you craving more.
+                Experience burger perfection today!</span
+              >
+            </p>
+          </div>
+        </div>
+        <div class="box">
+          <img class="image" src="./images/s-img-2.jpg" alt="" />
+          <div class="content">
+            <img src="./images/s-2.png" alt="" />
+            <h3>tasty pizza</h3>
+            <p>
+              <span
+                >Savor our Tasty Pizza, crafted with a crispy, golden crust,
+                rich tomato sauce, and the finest, freshest toppings. Melted
+                cheese and a perfect blend of herbs make every slice a
+                delightful experience. Enjoy a slice of pizza perfection!</span
+              >
+            </p>
+          </div>
+        </div>
+        <div class="box">
+          <img class="image" src="./images/s-img-3.jpg" alt="" />
+          <div class="content">
+            <img src="./images/s-3.png" alt="" />
+            <h3>cold ice-cream</h3>
+            <p>
+              <span
+                >Treat yourself to our Cold Ice Cream, a creamy, dreamy delight
+                that melts in your mouth. Choose from a variety of rich,
+                indulgent flavors, each crafted to perfection. Refreshingly cool
+                and irresistibly smooth, it's the perfect treat for any time of
+                day.</span
+              >
+            </p>
+          </div>
+        </div>
+        <div class="box">
+          <img class="image" src="./images/s-img-4.jpg" alt="" />
+          <div class="content">
+            <img src="./images/s-4.png" alt="" />
+            <h3>cold drinks</h3>
+            <p>
+              <span
+                >Quench your thirst with our Cold Drinks, a refreshing selection
+                of beverages that offer a burst of cool, invigorating flavors.
+                Whether you prefer classic sodas, sparkling waters, or fruity
+                refreshments, each sip is a delightful way to stay cool and
+                refreshed. Enjoy the chill!</span
+              >
+            </p>
+          </div>
+        </div>
+        <div class="box">
+          <img class="image" src="./images/s-img-5.jpg" alt="" />
+          <div class="content">
+            <img src="./images/s-5.png" alt="" />
+            <h3>tasty sweets</h3>
+            <p>
+              <span
+                >Delight in our Tasty Sweets, a heavenly assortment of desserts
+                crafted to satisfy your sweet tooth. From decadent cakes and
+                pastries to creamy puddings and confections, each treat is made
+                with the finest ingredients for an indulgent experience. Enjoy
+                the sweetness in every bite!</span
+              >
+            </p>
+          </div>
+        </div>
+        <div class="box">
+          <img class="image" src="./images/s-img-6.jpg" alt="" />
+          <div class="content">
+            <img src="./images/s-6.png" alt="" />
+            <h3>tasty breakfast</h3>
+            <p>
+              <span
+                >Start your day right with our Tasty Breakfast, featuring a
+                delicious array of morning favorites. From fluffy pancakes and
+                golden waffles to hearty omelets and fresh fruit bowls, every
+                dish is made to energize and satisfy. Enjoy a breakfast that's
+                both delicious and nourishing!</span
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="popular" id="popular">
+      <h1 class="heading">our <span>popular</span> foods</h1>
+
+      <div class="box-container">
+        <div class="box">
+          <span class="price"> ₹150 - ₹450 </span>
+          <img src="./images/p-1.jpg" alt="burger" />
+          <h3>tasty burger</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <a href="/#order" class="btn">order now</a>
+        </div>
+
+        <div class="box">
+          <span class="price"> ₹500 - ₹2100 </span>
+          <img src="./images/p-2.jpg" alt="cakes" />
+          <h3>tasty cakes</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <a href="/#order" class="btn">order now</a>
+        </div>
+
+        <div class="box">
+          <span class="price"> ₹50 - ₹400 </span>
+          <img src="./images/p-3.jpg" alt="sweets" />
+          <h3>tasty sweets</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <a href="/#order" class="btn">order now</a>
+        </div>
+
+        <div class="box">
+          <span class="price"> ₹30 - ₹600 </span>
+          <img src="./images/p-4.jpg" alt="cupcakes" />
+          <h3>tasty cupcakes</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <a href="/#order" class="btn">order now</a>
+        </div>
+
+        <div class="box">
+          <span class="price"> ₹40 - ₹120 </span>
+          <img src="./images/p-5.jpg" alt="drinks" />
+          <h3>cold drinks</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <a href="/#order" class="btn">order now</a>
+        </div>
+
+        <div class="box">
+          <span class="price"> ₹35 - ₹380 </span>
+          <img src="./images/p-6.jpg" alt="ice-cream" />
+          <h3>tasty ice-creams</h3>
+          <div class="stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <a href="/#order" class="btn">order now</a>
+        </div>
+      </div>
+    </section>
+
+    <!--     <section class="steps">
+
+        <div class="box">
+            <img src="./images/step-1.jpg" alt="">
+            <h3>choose your favourite food</h3>
+        </div>
+        <div class="box">
+            <img src="./images/step-2.jpg" alt="">
+            <h3>free and fast delivery</h3>
+        </div>
+        <div class="box">
+            <img src="./images/step-3.jpg" alt="">
+            <h3>easy payment methods</h3>
+        </div>
+        <div class="box">
+            <img src="./images/step-4.jpg" alt="">
+            <h3>and finally, enjoy your food</h3>
+        </div>
+    </section> -->
+
+    <section class="gallery" id="gallery">
+      <h1 class="heading">our food <span>gallery</span></h1>
+
+      <div class="box-container">
+        <div class="box">
+          <img src="./images/g-1.jpg" alt="" />
+          <div class="content">
+            <h3>Tasty Burger</h3>
+            <p>
+              Absolutely delicious! The Tasty Burger was juicy and flavorful,
+              easily the best burger I've had in a long time.
+            </p>
+            <a href="/#order" class="btn">order now</a>
+          </div>
+        </div>
+        <div class="box">
+          <img src="./images/g-3.jpg" alt="" />
+          <div class="content">
+            <h3>tasty food</h3>
+            <p>
+              Breakfast here is amazing! The pancakes were fluffy, and the
+              omelet was packed with fresh ingredients. A great way to start the
+              day!
+            </p>
+            <a href="/#order" class="btn">order now</a>
+          </div>
+        </div>
+        <div class="box">
+          <img src="./images/g-4.jpg" alt="" />
+          <div class="content">
+            <h3>TastyBites</h3>
+            <p>
+              The cupcakes from TastyBites are absolutely delightful! They're
+              moist, flavorful, and beautifully decorated. Each bite is a little
+              piece of heaven. I can't resist ordering them for every special
+              occasion!"
+            </p>
+            <a href="/#order" class="btn">order now</a>
+          </div>
+        </div>
+        <div class="box">
+          <img src="./images/g-5.jpg" alt="" />
+          <div class="content">
+            <h3>Tasty Sweets</h3>
+            <p>
+              The Tasty Sweets are simply divine. Every bite of the cake was
+              moist and delicious. A real treat!"
+            </p>
+            <a href="/#order" class="btn">order now</a>
+          </div>
+        </div>
+        <div class="box">
+          <img src="./images/p-5.jpg" alt="" />
+          <div class="content">
+            <h3>Cold Drinks</h3>
+            <p>
+              The Cold Drinks are so refreshing and full of flavor. They were
+              the perfect complement to my meal.
+            </p>
+            <a href="/#order" class="btn">order now</a>
+          </div>
+        </div>
+        <div class="box">
+          <img src="./images/g-8.jpg" alt="" />
+          <div class="content">
+            <h3>Tasty chocolate</h3>
+            <p>
+              Tasty chocolate from TastyBites are simply delicious! They never
+              fail to satisfy my sweet cravings. Perfect for indulging or
+              sharing with friends
+            </p>
+            <a href="/#order" class="btn">order now</a>
+          </div>
+        </div>
+        <div class="box">
+          <img src="./images/p-6.jpg" alt="" />
+          <div class="content">
+            <h3>tasty Cold Ice Cream</h3>
+            <p>
+              Cold Ice Cream from TastyBites is a real treat! Creamy, smooth,
+              and oh-so-satisfying. Whether you're cooling off on a hot day or
+              just need a sweet pick-me-up, their ice cream hits the spot every
+              time. Definitely a must-try!
+            </p>
+            <a href="/#order" class="btn">order now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="order"
+      id="order"
+      style="
+        background: #fff;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        border-radius: 0.5rem;
+        margin: 2rem;
+        align-items: center;
+      "
+    >
+      <h1
+        class="heading"
+        style="
+          text-align: center;
+          font-size: 3.5rem;
+          padding: 1rem;
+          color: #666;
+        "
+      >
+        <span style="color: var(--red)">Order</span> Now
+      </h1>
+
+      <div
+        class="row"
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1.5rem;
+          justify-content: space-between;
+        "
+      >
+        <!-- Restaurant and Food Items -->
+        <div
+          class="restaurant-list"
+          style="
+            flex: 2 1 60%;
+            padding: 1rem;
+            background: #f9f9f9;
+            border: 0.1rem solid rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+          "
+        >
+          <h2 style="font-size: 2.5rem; color: #333; margin-bottom: 1rem">
+            Available Restaurants
+          </h2>
+        </div>
+
+        <!-- Cart Section -->
+        <div
+          class="cart"
+          style="
+            flex: 1 1 35%;
+            padding: 1rem;
+            background: #fff;
+            border: 0.1rem solid rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+          "
+        >
+          <h2 style="font-size: 2.5rem; color: #333; margin-bottom: 1rem">
+            Your Cart
+          </h2>
+          <ul
+            id="cart-items"
+            style="list-style: none; padding: 0; margin-bottom: 1rem"
+          >
+            <!-- Cart items will be dynamically populated -->
+          </ul>
+         <a href="/delivery">
+          <button
+           
+            style="
+              width: 100%;
+              padding: 1rem;
+              font-size: 1.8rem;
+              color: #fff;
+              background-color: var(--red);
+              border: none;
+              border-radius: 0.5rem;
+              cursor: pointer;
+            "
+          >
+            Place Order
+          </button>
+         </a>
+          
+        </div>
+      </div>
+    </section>
+
+    <section class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <h3>Contact Us</h3>
+          <ul>
+            <li>Email: likhitha.sivapuram@gmail.com</li>
+            <li>Phone: +91 7993058173</li>
+            <li>
+              Address: 16, Raghavendra colony, Beeramguda, Hyderabad,
+              Telangana,502032
+            </li>
+          </ul>
+        </div>
+        <div class="footer-content">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#speciality">our's special</a></li>
+            <li><a href="#popular">popular foods</a></li>
+            <li><a href="#review">customer reviews</a></li>
+          </ul>
+        </div>
+        <div class="footer-content">
+          <h3>Follow Us</h3>
+          <ul class="social-icons">
+            <li>
+              <a href="https://www.instagram.com/vicky_vigneshg/"
+                ><i class="fab fa-instagram"></i
+              ></a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/vigneshgbe/"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@Graduate-Hands"
+                ><i class="fab fa-youtube"></i
+              ></a>
+            </li>
+            <li>
+              <a href="https://wa.me/+919047606037"
+                ><i class="fab fa-whatsapp"></i
+              ></a>
+            </li>
+            <li>
+              <a href="https://github.com/Sweety-Vigneshg"
+                ><i class="fab fa-github"></i
+              ></a>
+            </li>
+            <li>
+              <a href="https://in.pinterest.com/vigneshgbe/"
+                ><i class="fab fa-pinterest"></i
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <a href="#home" class="fas fa-angle-up" id="scroll-top"></a>
+
+    <div class="loader-container">
+      <img src="./images/loader.gif" alt="" />
+    </div>
+
+    <script>
+            // On Scroll Functionality
+            window.onscroll = () => {
+              const scrollTopButton = document.querySelector("#scroll-top");
+              if (window.scrollY > 60) {
+                scrollTopButton.classList.add("active");
+              } else {
+                scrollTopButton.classList.remove("active");
+              }
+            };
+
+
+            function loader() {
+              const loaderContainer = document.querySelector(".loader-container");
+              if (loaderContainer) {
+                loaderContainer.classList.add("fade-out");
+              }
+            }
+
+            function fadeOut() {
+              setTimeout(loader, 3000);
+            }
+
+            window.onload = fadeOut;
+
+            // Parse Server Data
+            const restaurantData = <%- JSON.stringify(restaurantdata) %>;
+
+            console.log("Restaurant Data:", restaurantData);
+
+            // Cart Functionality
+            const cart = [];
+
+            function addToCart(foodName, restaurant) {
+              const existingItem = cart.find(
+                (item) => item.foodName === foodName && item.restaurant === restaurant
+              );
+
+              if (existingItem) {
+                existingItem.quantity += 1;
+              } else {
+                cart.push({ foodName, restaurant, quantity: 1 });
+              }
+
+              cart.sort((a, b) => a.restaurant.localeCompare(b.restaurant));
+              renderCart();
+            }
+
+            function renderCart() {
+              const cartItemsElement = document.getElementById("cart-items");
+              if (!cartItemsElement) return;
+
+              cartItemsElement.innerHTML = "";
+
+              cart.forEach((item, index) => {
+                const listItem = document.createElement("li");
+                listItem.style.marginBottom = "0.5rem";
+                listItem.textContent = `${item.foodName} from ${item.restaurant} (x${item.quantity})`;
+
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "Remove";
+                removeButton.style.cssText = `
+                  margin-left: 1rem;
+                  padding: 0.5rem 1rem;
+                  font-size: 1.2rem;
+                  color: #fff;
+                  background-color: var(--red);
+                  border: none;
+                  border-radius: 0.5rem;
+                  cursor: pointer;
+                `;
+                removeButton.onclick = () => removeFromCart(index);
+
+                listItem.appendChild(removeButton);
+                cartItemsElement.appendChild(listItem);
+              });
+            }
+
+            function removeFromCart(index) {
+              cart[index].quantity -= 1;
+              if (cart[index].quantity === 0) {
+                cart.splice(index, 1);
+              }
+              renderCart();
+            }
+
+            // function placeOrder() {
+            //   if (cart.length === 0) {
+            //     alert("Your cart is empty!");
+            //     return;
+            //   }
+            //   alert("Order placed successfully!");
+            //   cart.length = 0;
+            //   renderCart();
+            // }
+
+            // Render Restaurants
+            const container = document.querySelector(".restaurant-list");
+
+            function renderRestaurants(data, searchTerm = "") {
+              if (!container) return;
+
+              const searchHTML = `
+                <div style="margin-bottom: 2rem;">
+                  <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search restaurants or food items..."
+                    style="width: 80%; padding: 1rem; font-size: 1.6rem; border: 2px solid #ddd; border-radius: 0.5rem; margin-bottom: 1rem;"
+                  >
+                  <button
+                    id="searchButton"
+                    style="padding: 1rem 2rem; font-size: 1.6rem; color: #fff; background-color: var(--red); border: none; border-radius: 0.5rem; cursor: pointer;"
+                    onclick="search()"
+                  >
+                    Search
+                  </button>
+                </div>
+              `;
+
+              container.innerHTML = `
+                <h2 style="font-size: 2.5rem; color: #333; margin-bottom: 1rem">Available Restaurants</h2>
+                ${searchHTML}
+              `;
+
+              const filteredData = data.filter((restaurant) => {
+                const restaurantNameMatch = restaurant.name
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase());
+                const menuItemMatch = restaurant.menu.some((item) =>
+                  item.name.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+                return restaurantNameMatch || menuItemMatch;
+              });
+
+              if (filteredData.length === 0) {
+                container.innerHTML += `
+                  <p style="font-size: 1.8rem; color: #666; text-align: center;">
+                    No restaurants or food items found matching "${searchTerm}"
+                  </p>
+                `;
+                return;
+              }
+
+              filteredData.forEach((restaurant) => {
+                const restaurantDiv = document.createElement("div");
+                restaurantDiv.classList.add("restaurant");
+                restaurantDiv.style.marginBottom = "2rem";
+
+                restaurantDiv.innerHTML = `
+             <a href="/review/${restaurant._id}">
+        <img
+          src="${restaurant.image}"
+          alt="${restaurant.name}"
+          style="width: 100%; border-radius: 0.5rem; margin-bottom: 1rem"
+        />
+        <h3 style="font-size: 2rem; color: var(--red); margin-bottom: 1rem">
+          ${restaurant.name}
+        </h3>
+      </a>
+                  <ul style="list-style: none; padding: 0">
+                    ${restaurant.menu
+                      .map(
+                        (item) => `
+                        <li style="margin-bottom: 1rem">
+                          <img
+                            src="${item.image}"
+                            alt="${item.name}"
+                            style="width: 50px; height: 50px; object-fit: cover; border-radius: 0.5rem; margin-right: 0.5rem; vertical-align: middle;"
+                          />
+
+                          <span style="font-size: 1.7rem; color: #333">${item.name} - $${item.price.toFixed(
+                            2
+                          )}</span>
+                          <button
+                            onclick="addToCart('${item.name}', '${restaurant.name}')"
+                            style="margin-left: 1rem; padding: 0.8rem 1.5rem; font-size: 1.6rem; color: #fff; background-color: var(--red); border: none; border-radius: 0.5rem; cursor: pointer;"
+                          >
+                            Add to Cart
+                          </button>
+                        </li>
+                      `
+                      )
+                      .join("")}
+                  </ul>
+                `;
+
+                container.appendChild(restaurantDiv);
+              });
+            }
+
+            function search() {
+              const searchInput = document.getElementById("searchInput");
+              if (!searchInput) return;
+              const searchTerm = searchInput.value.trim();
+              renderRestaurants(restaurantData, searchTerm);
+            }
+
+
+            renderRestaurants(restaurantData, "");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Delivery Review</title>
+    <style>
+      .food-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .restaurant-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+
+      .restaurant-header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .restaurant-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .menu-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .menu-item {
+        display: flex;
+        gap: 15px;
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+      }
+
+      .menu-item img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+
+      .reviews,
+      .comments {
+        margin-top: 20px;
+      }
+
+      .review,
+      .comment {
+        background: #f8f8f8;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+      }
+
+      .comment-form {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+      }
+
+      .comment-input {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .submit-button {
+        padding: 8px 16px;
+        background: #f59e0b;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .submit-button:hover {
+        background: #d97706;
+      }
+
+      .section-title {
+        font-size: 1.5em;
+        margin: 20px 0 10px;
+        color: #333;
+      }
+
+      .price {
+        color: #059669;
+        font-weight: bold;
+      }
+
+      .empty-message {
+        color: #666;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="food-items">
+      <!-- Restaurant template will be inserted here -->
+    </div>
+
+    <script>
+        // Sample restaurant data
+        const restaurantData = [<%- JSON.stringify(restaurantinfo) %>];
+    
+       // console.log("Restaurant Data:", restaurantData);
+    
+        function createRestaurantHTML(restaurant) {
+            return `
+                <div class="restaurant-card" data-id="${restaurant._id}">
+                    <div class="restaurant-header">
+                        <img src="${restaurant.image}" alt="${restaurant.name}" class="restaurant-image">
+                        <div>
+                            <h2>${restaurant.name}</h2>
+                            <p id="rating-${restaurant._id}">Rating: ${restaurant.reviews || 'No ratings yet'}</p>
+                        </div>
+                    </div>
+    
+                    <div class="menu-section">
+                        <h3 class="section-title">Menu</h3>
+                        <div class="menu-items">
+                            ${restaurant.menu.map(item => `
+                                <div class="menu-item">
+                                    <img src="${item.image}" alt="${item.name}">
+                                    <div>
+                                        <h4>${item.name}</h4>
+                                        <p>${item.description}</p>
+                                        <p class="price">$${item.price}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+    
+                   
+    
+                    <div class="rating-section">
+                        <h3 class="section-title">Add Rating</h3>
+                        <form class="rating-form" onsubmit="handleRatingSubmit(event, '${restaurant._id}')">
+                           
+                        </form>
+                    </div>
+    
+                    <div class="comments">
+                        <h3 class="section-title">Comments</h3>
+                        <div class="comments-list">
+                            ${restaurant.comments.length ?
+                                restaurant.comments.map(comment => `
+                                    <div class="comment">${comment}</div>
+                                `).join('') :
+                                '<p class="empty-message">No comments yet</p>'
+                            }
+                        </div>
+                       
+                    </div>
+                    <form class="comment-form" method="post" action="/review/${restaurant._id}">
+    <input type="text" name="comment" class="comment-input" placeholder="Add a comment..." required>
+    <input type="number" name="rating" id="rating-${restaurant._id}" required min="1" max="5">
+    <button type="submit" class="submit-button">Submit</button>
+</form>
+
+                </div>
+            `;
+        }
+    
+  
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.food-items');
+    
+            // Ensure restaurantData is an array
+            const data = Array.isArray(restaurantData) ? restaurantData : [restaurantData];
+    
+            container.innerHTML = data.map(createRestaurantHTML).join('');
+        });
+    </script>
+    
+  </body>
+</html>

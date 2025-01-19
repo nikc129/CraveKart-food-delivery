@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Address Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="number"], input[type="email"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Enter Delivery Address</h1>
+   
+        <!-- Name Field -->
+        <div class="form-group">
+            <label for="recipient-name">Recipient's Name</label>
+            <input type="text" id="recipient-name" name="name" required placeholder="Enter recipient's name">
+            <div class="error-message" id="name-error">This field is required.</div>
+        </div>
+
+        <!-- Address Field -->
+        <div class="form-group">
+            <label for="address">Street Address</label>
+            <input type="text" id="address" name="address" required placeholder="Enter street address">
+            <div class="error-message" id="address-error">This field is required.</div>
+        </div>
+
+        <!-- City Field -->
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" required placeholder="Enter city name">
+            <div class="error-message" id="city-error">This field is required.</div>
+        </div>
+
+        <!-- State Field -->
+        <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" id="state" name="state" required placeholder="Enter state name">
+            <div class="error-message" id="state-error">This field is required.</div>
+        </div>
+
+        <!-- Postal Code Field -->
+        <div class="form-group">
+            <label for="postal-code">Postal Code</label>
+            <input type="number" id="postal-code" name="postalCode" required placeholder="Enter postal code">
+            <div class="error-message" id="postal-code-error">This field is required.</div>
+        </div>
+
+        <!-- Country Field -->
+        <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" required placeholder="Enter country name">
+            <div class="error-message" id="country-error">This field is required.</div>
+        </div>
+
+        <!-- Submit Button -->
+       <a href="/payment"><button>Submit Address</button></a> 
+    
+</div>
+
+<script>
+    // Optional validation for form fields
+    const form = document.getElementById('delivery-form');
+    form.addEventListener('submit', (event) => {
+        let valid = true;
+
+        // Validate each field
+        ['recipient-name', 'address', 'city', 'state', 'postal-code', 'country'].forEach(field => {
+            const input = document.getElementById(field);
+            if (!input.value.trim()) {
+                valid = false;
+                document.getElementById(`${field}-error`).style.display = 'block';
+            } else {
+                document.getElementById(`${field}-error`).style.display = 'none';
+            }
+        });
+
+        if (!valid) {
+            event.preventDefault(); 
+        }
+    });
+</script>
+
+</body>
+</html>
