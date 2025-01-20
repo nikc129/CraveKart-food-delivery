@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Details Form</title>
+    <style>
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .menu-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #menuItems {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"><i class="fas fa-utensils"></i>food</a>
+  
+        <div id="menu-bar" class="fas fa-bars"></div>
+  
+        <nav class="navbar">
+          <!--<a href="#special">specials</a>-->
+          <a href="/">best sellers</a>
+          <a href="/">food gallery</a>
+          <a href="/review">customer reviews</a>
+          <a href="/"><button class="btn0">Order Now</button></a>
+  
+          <a href="/login/register.html"> Register</a>
+        </nav>
+      </header>
+      <div class="content">
+        <h3>CraveKart</h3>
+  
+        <a href="#order" class="btn">order now</a>
+      </div>
+  
+    <div class="form-container">
+        <h2>Restaurant Details</h2>
+        <form action="/addRestaurant" method="POST">
+            <!-- Basic Restaurant Info -->
+            <div class="form-group">
+                <label for="name">Restaurant Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Restaurant Image URL:</label>
+                <input type="url" id="image" name="image" required>
+            </div>
+
+            <!-- Menu Items Section -->
+            <h3>Menu Items</h3>
+            <div id="menuItems">
+                <div class="menu-item">
+                    <h4>Menu Item 1</h4>
+                    <div class="form-group">
+                        <label for="menu[0][name]">Item Name:</label>
+                        <input type="text" name="menu[0][name]" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="menu[0][image]">Item Image URL:</label>
+                        <input type="url" name="menu[0][image]" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="menu[0][price]">Price:</label>
+                        <input type="number" name="menu[0][price]" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="menu[0][description]">Description:</label>
+                        <textarea name="menu[0][description]" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="menu[0][rating]">Rating:</label>
+                        <input type="number" name="menu[0][rating]" min="1" max="5" step="0.1">
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" onclick="addMenuItem()">Add Another Menu Item</button>
+
+            <!-- Reviews and Comments -->
+            <div class="form-group">
+                <label for="reviews">Number of Reviews:</label>
+                <input type="number" id="reviews" name="reviews" min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="comments">Comments:</label>
+                <textarea id="comments" name="comments"></textarea>
+            </div>
+
+            <button type="submit">Submit Restaurant</button>
+        </form>
+    </div>
+
+    <script>
+        let menuItemCount = 1;
+
+        function addMenuItem() {
+            const menuItems = document.getElementById('menuItems');
+            const newItem = document.createElement('div');
+            newItem.className = 'menu-item';
+            newItem.innerHTML = `
+                <h4>Menu Item ${menuItemCount + 1}</h4>
+                <div class="form-group">
+                    <label>Item Name:</label>
+                    <input type="text" name="menu[${menuItemCount}][name]" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Item Image URL:</label>
+                    <input type="url" name="menu[${menuItemCount}][image]" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Price:</label>
+                    <input type="number" name="menu[${menuItemCount}][price]" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea name="menu[${menuItemCount}][description]" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Rating:</label>
+                    <input type="number" name="menu[${menuItemCount}][rating]" min="1" max="5" step="0.1">
+                </div>
+            `;
+            menuItems.appendChild(newItem);
+            menuItemCount++;
+        }
+    </script>
+</body>
+</html>

@@ -116,52 +116,22 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
+app.get('/addRestaurant', async (req, res) => {
+  res.render(path.join(__dirname, 'views', 'addrest.ejs'));
+})
 // Add a new restaurant route (for testing purposes)
-// app.get('/addRestaurant', async (req, res) => {
-//   const { name, image, menu, reviews, comments, rating } =   {
-//     name: 'Foodie Paradise',
-//     image: 'https://example.com/restaurant-image.jpg',
-//     menu: [
-//       {
-//         name: 'Cheeseburger',
-//         image: 'https://example.com/cheeseburger.jpg',
-//         price: 9.99,
-//         description: 'A delicious cheeseburger with fresh toppings and a juicy patty.',
-//         rating: 4.5,
-//       },
-//       {
-//         name: 'Margherita Pizza',
-//         image: 'https://example.com/margherita-pizza.jpg',
-//         price: 12.99,
-//         description: 'Classic Margherita pizza with mozzarella, basil, and tomato.',
-//         rating: 4.7,
-//       },
-//       {
-//         name: 'Spaghetti Bolognese',
-//         image: 'https://example.com/spaghetti-bolognese.jpg',
-//         price: 14.49,
-//         description: 'A savory Bolognese sauce served with freshly made spaghetti.',
-//         rating: 4.2,
-//       },
-//     ],
-//     reviews: 4.5, // Average rating (calculated by your application)
-//     comments: [
-//       'Best cheeseburger I have ever had!',
-//       'The pizza was so delicious, will definitely come back!',
-//       'Great service and amazing food.',
-//     ],
-//   };
+app.post('/addRestaurant', async (req, res) => {
+  const { name, image, menu, reviews, comments, rating } =  req.body;
 
-//   try {
-//     const newRestaurant = new Restaurant({ name, image, menu, reviews, comments, rating });
-//     await newRestaurant.save();
-//     res.status(201).json({ message: 'Restaurant added successfully', restaurant: newRestaurant });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Server error', error: err });
-//   }
-// });
+  try {
+    const newRestaurant = new Restaurant({ name, image, menu, reviews, comments, rating });
+    await newRestaurant.save();
+    res.status(201).json({ message: 'Restaurant added successfully', restaurant: newRestaurant });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error', error: err });
+  }
+});
 
 // Get all restaurants route (for testing purposes)
 app.get('/restaurants', async (req, res) => {
@@ -174,8 +144,7 @@ app.get('/restaurants', async (req, res) => {
   }
 });
 app.get('/review/:id', async (req, res) => {
-  const { id } = req.params; // Extract the 'id' parameter from req.params
-  try {
+  const { id } = req.params;   try {
     const restaurantinfo = await Restaurant.findById(id);
     console.log(restaurantinfo);
     res.render('review', { restaurantinfo });
@@ -232,7 +201,7 @@ app.get("/delivery",async(req,res)=>{
   res.render("delivery")
 })
 app.get("/payment",async(req,res)=>{
-  console.log("first")
+ // console.log("first")
   res.sendFile(path.join(__dirname, 'views', 'payment.html'));
 })
 
