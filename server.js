@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
@@ -10,7 +11,8 @@ const port = 3000;
 app.set('view engine', 'ejs');
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+const MONGO_URI="mongodb+srv://nikhilchary129:c1jxafBq5FBkLwbQ@cluster0.9cv4p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
 
@@ -60,12 +62,12 @@ app.get('/', async (req, res) => {
   } catch (error) {
     console.error('Error fetching restaurant data:', error);
     res.status(500).send('Internal Server Error');
-  }
+  } 
 });
 
 // Register route ("/register") - Serve the register.html page when accessed via GET
 app.get('/register', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'register.html'));  // Sends the register.html file
+  res.sendFile(path.join(__dirname, 'views', 'register.html'));  // Sends the register.html file
 });
 
 // Register route ("/register") - Handle user registration via POST
@@ -76,12 +78,55 @@ app.post('/register', async (req, res) => {
     const hashedPassword = password; // Replace with actual hashing logic
     const newUser = new User({ first_name, last_name, email, password: hashedPassword });
     await newUser.save();
-    res.status(201).json({ message: 'User registered successfully', user: newUser });
+    res.redirect("/home");
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error', error: err });
   }
 });
+
+let savedCart = []; 
+
+app.get("/ratefood",async(req,res)=>{
+  const restaurantdata = await Restaurant.find();
+  //  console.log("/ratefood",savedCart)
+  res.render('foodrate', { restaurantdata, savedCart });
+})
+
+app.get("/savedata", async (req, res) => {
+  try {
+    if (savedCart.length === 0) {
+      return res.status(200).json({ success: true, message: "Cart is empty", cart: [] });
+    }
+
+    // Respond with the saved cart data
+    res.status(200).json({ success: true, cart: savedCart });
+  } catch (error) {
+    console.error("Error retrieving cart:", error);
+
+    // Handle any errors and send a response
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+app.post("/savedata", async (req, res) => {
+  try {
+    const { cart } = req.body;
+
+    if (!cart || !Array.isArray(cart)) {
+      return res.status(400).json({ success: false, message: "Invalid cart data" });
+    }
+
+    savedCart = cart; // Save the cart data in memory
+   // console.log("Cart saved:", savedCart);
+
+    res.status(200).json({ success: true, message: "Order saved successfully" });
+  } catch (error) {
+    console.error("Error saving cart:", error);
+
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
 
 // Login route
 app.post('/login', async (req, res) => {
@@ -102,15 +147,7 @@ app.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    res.status(200).json({
-      message: 'Login successful',
-      user: {
-        id: user._id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-      },
-    });
+    res.redirect("/home");
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });

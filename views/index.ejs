@@ -731,7 +731,12 @@
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
           </div>
-          <a href="/#order" class="btn">order now</a>
+          <a
+            href="/#order"
+            onclick="addToCart('tasty burger', 'Tasty Delights Restaurant')"
+            class="btn"
+            >order now</a
+          >
         </div>
 
         <div class="box">
@@ -745,7 +750,12 @@
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
           </div>
-          <a href="/#order" class="btn">order now</a>
+          <a
+            href="/#order"
+            onclick="addToCart('tasty cakes', 'Tasty Delights Restaurant')"
+            class="btn"
+            >order now</a
+          >
         </div>
 
         <div class="box">
@@ -759,7 +769,12 @@
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
           </div>
-          <a href="/#order" class="btn">order now</a>
+          <a
+            href="/#order"
+            onclick="addToCart('tasty sweets', 'Tasty Delights Restaurant')"
+            class="btn"
+            >order now</a
+          >
         </div>
 
         <div class="box">
@@ -773,7 +788,12 @@
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
           </div>
-          <a href="/#order" class="btn">order now</a>
+          <a
+            href="/#order"
+            onclick="addToCart('tasty cupcakes', 'Tasty Delights Restaurant')"
+            class="btn"
+            >order now</a
+          >
         </div>
 
         <div class="box">
@@ -787,7 +807,12 @@
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
           </div>
-          <a href="/#order" class="btn">order now</a>
+          <a
+            href="/#order"
+            onclick="addToCart('cold drinks', 'Tasty Delights Restaurant')"
+            class="btn"
+            >order now</a
+          >
         </div>
 
         <div class="box">
@@ -801,7 +826,12 @@
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
           </div>
-          <a href="/#order" class="btn">order now</a>
+          <a
+            href="/#order"
+            onclick="addToCart('tasty ice-creams', 'Tasty Delights Restaurant')"
+            class="btn"
+            >order now</a
+          >
         </div>
       </div>
     </section>
@@ -966,24 +996,22 @@
           >
             <!-- Cart items will be dynamically populated -->
           </ul>
-         <a href="/delivery">
-          <button
-           
-            style="
-              width: 100%;
-              padding: 1rem;
-              font-size: 1.8rem;
-              color: #fff;
-              background-color: var(--red);
-              border: none;
-              border-radius: 0.5rem;
-              cursor: pointer;
-            "
-          >
-            Place Order
-          </button>
-         </a>
-          
+          <a onclick="placeOrder()">
+            <button
+              style="
+                width: 100%;
+                padding: 1rem;
+                font-size: 1.8rem;
+                color: #fff;
+                background-color: var(--red);
+                border: none;
+                border-radius: 0.5rem;
+                cursor: pointer;
+              "
+            >
+              Place Order
+            </button>
+          </a>
         </div>
       </div>
     </section>
@@ -1055,207 +1083,230 @@
     </div>
 
     <script>
-            // On Scroll Functionality
-            window.onscroll = () => {
-              const scrollTopButton = document.querySelector("#scroll-top");
-              if (window.scrollY > 60) {
-                scrollTopButton.classList.add("active");
-              } else {
-                scrollTopButton.classList.remove("active");
-              }
-            };
+                  // On Scroll Functionality
+                  window.onscroll = () => {
+                    const scrollTopButton = document.querySelector("#scroll-top");
+                    if (window.scrollY > 60) {
+                      scrollTopButton.classList.add("active");
+                    } else {
+                      scrollTopButton.classList.remove("active");
+                    }
+                  };
 
 
-            function loader() {
-              const loaderContainer = document.querySelector(".loader-container");
-              if (loaderContainer) {
-                loaderContainer.classList.add("fade-out");
-              }
+                  function loader() {
+                    const loaderContainer = document.querySelector(".loader-container");
+                    if (loaderContainer) {
+                      loaderContainer.classList.add("fade-out");
+                    }
+                  }
+
+                  function fadeOut() {
+                    setTimeout(loader, 3000);
+                  }
+
+                  window.onload = fadeOut;
+
+                  // Parse Server Data
+                  const restaurantData = <%- JSON.stringify(restaurantdata) %>;
+
+                  console.log("Restaurant Data:", restaurantData);
+
+                  // Cart Functionality
+                  const cart = [];
+
+                  function addToCart(foodName, restaurant="") {
+                    const existingItem = cart.find(
+                      (item) => item.foodName === foodName && item.restaurant === restaurant
+                    );
+
+                    if (existingItem) {
+                      existingItem.quantity += 1;
+                    } else {
+                      cart.push({ foodName, restaurant, quantity: 1 });
+                    }
+
+                    cart.sort((a, b) => a.restaurant.localeCompare(b.restaurant));
+                    renderCart();
+                  }
+
+
+
+                  function renderCart() {
+                    const cartItemsElement = document.getElementById("cart-items");
+                    if (!cartItemsElement) return;
+
+                    cartItemsElement.innerHTML = "";
+
+                    cart.forEach((item, index) => {
+                      const listItem = document.createElement("li");
+                      listItem.style.marginBottom = "0.5rem";
+                      listItem.textContent = `${item.foodName} from ${item.restaurant} (x${item.quantity})`;
+
+                      const removeButton = document.createElement("button");
+                      removeButton.textContent = "Remove";
+                      removeButton.style.cssText = `
+                        margin-left: 1rem;
+                        padding: 0.5rem 1rem;
+                        font-size: 1.2rem;
+                        color: #fff;
+                        background-color: var(--red);
+                        border: none;
+                        border-radius: 0.5rem;
+                        cursor: pointer;
+                      `;
+                      removeButton.onclick = () => removeFromCart(index);
+
+                      listItem.appendChild(removeButton);
+                      cartItemsElement.appendChild(listItem);
+                    });
+                  }
+
+                  function removeFromCart(index) {
+                    cart[index].quantity -= 1;
+                    if (cart[index].quantity === 0) {
+                      cart.splice(index, 1);
+                    }
+                    renderCart();
+                  }
+
+                  function placeOrder() {
+        if (cart.length === 0) {
+          alert("Your cart is empty!");
+          return;
+        }
+
+        fetch("/savedata", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ cart }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to save order data.");
             }
-
-            function fadeOut() {
-              setTimeout(loader, 3000);
-            }
-
-            window.onload = fadeOut;
-
-            // Parse Server Data
-            const restaurantData = <%- JSON.stringify(restaurantdata) %>;
-
-            console.log("Restaurant Data:", restaurantData);
-
-            // Cart Functionality
-            const cart = [];
-
-            function addToCart(foodName, restaurant) {
-              const existingItem = cart.find(
-                (item) => item.foodName === foodName && item.restaurant === restaurant
-              );
-
-              if (existingItem) {
-                existingItem.quantity += 1;
-              } else {
-                cart.push({ foodName, restaurant, quantity: 1 });
-              }
-
-              cart.sort((a, b) => a.restaurant.localeCompare(b.restaurant));
-              renderCart();
-            }
-
-            
-
-            function renderCart() {
-              const cartItemsElement = document.getElementById("cart-items");
-              if (!cartItemsElement) return;
-
-              cartItemsElement.innerHTML = "";
-
-              cart.forEach((item, index) => {
-                const listItem = document.createElement("li");
-                listItem.style.marginBottom = "0.5rem";
-                listItem.textContent = `${item.foodName} from ${item.restaurant} (x${item.quantity})`;
-
-                const removeButton = document.createElement("button");
-                removeButton.textContent = "Remove";
-                removeButton.style.cssText = `
-                  margin-left: 1rem;
-                  padding: 0.5rem 1rem;
-                  font-size: 1.2rem;
-                  color: #fff;
-                  background-color: var(--red);
-                  border: none;
-                  border-radius: 0.5rem;
-                  cursor: pointer;
-                `;
-                removeButton.onclick = () => removeFromCart(index);
-
-                listItem.appendChild(removeButton);
-                cartItemsElement.appendChild(listItem);
-              });
-            }
-
-            function removeFromCart(index) {
-              cart[index].quantity -= 1;
-              if (cart[index].quantity === 0) {
-                cart.splice(index, 1);
-              }
-              renderCart();
-            }
-
-            // function placeOrder() {
-            //   if (cart.length === 0) {
-            //     alert("Your cart is empty!");
-            //     return;
-            //   }
-            //   alert("Order placed successfully!");
-            //   cart.length = 0;
-            //   renderCart();
-            // }
-
-            // Render Restaurants
-            const container = document.querySelector(".restaurant-list");
-
-            function renderRestaurants(data, searchTerm = "") {
-              if (!container) return;
-
-              const searchHTML = `
-                <div style="margin-bottom: 2rem;">
-                  <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search restaurants or food items..."
-                    style="width: 80%; padding: 1rem; font-size: 1.6rem; border: 2px solid #ddd; border-radius: 0.5rem; margin-bottom: 1rem;"
-                  >
-                  <button
-                    id="searchButton"
-                    style="padding: 1rem 2rem; font-size: 1.6rem; color: #fff; background-color: var(--red); border: none; border-radius: 0.5rem; cursor: pointer;"
-                    onclick="search()"
-                  >
-                    Search
-                  </button>
-                </div>
-              `;
-
-              container.innerHTML = `
-                <h2 style="font-size: 2.5rem; color: #333; margin-bottom: 1rem">Available Restaurants</h2>
-                ${searchHTML}
-              `;
-
-              const filteredData = data.filter((restaurant) => {
-                const restaurantNameMatch = restaurant.name
-                  .toLowerCase()
-                  .includes(searchTerm.toLowerCase());
-                const menuItemMatch = restaurant.menu.some((item) =>
-                  item.name.toLowerCase().includes(searchTerm.toLowerCase())
-                );
-                return restaurantNameMatch || menuItemMatch;
-              });
-
-              if (filteredData.length === 0) {
-                container.innerHTML += `
-                  <p style="font-size: 1.8rem; color: #666; text-align: center;">
-                    No restaurants or food items found matching "${searchTerm}"
-                  </p>
-                `;
-                return;
-              }
-
-              filteredData.forEach((restaurant) => {
-                const restaurantDiv = document.createElement("div");
-                restaurantDiv.classList.add("restaurant");
-                restaurantDiv.style.marginBottom = "2rem";
-
-                restaurantDiv.innerHTML = `
-             <a href="/review/${restaurant._id}">
-        <img
-          src="${restaurant.image}"
-          alt="${restaurant.name}"
-          style="width: 100%; border-radius: 0.5rem; margin-bottom: 1rem"
-        />
-        <h3 style="font-size: 2rem; color: var(--red); margin-bottom: 1rem">
-          ${restaurant.name}
-        </h3>
-      </a>
-                  <ul style="list-style: none; padding: 0">
-                    ${restaurant.menu
-                      .map(
-                        (item) => `
-                        <li style="margin-bottom: 1rem">
-                          <img
-                            src="${item.image}"
-                            alt="${item.name}"
-                            style="width: 50px; height: 50px; object-fit: cover; border-radius: 0.5rem; margin-right: 0.5rem; vertical-align: middle;"
-                          />
-
-                          <span style="font-size: 1.7rem; color: #333">${item.name} - $${item.price.toFixed(
-                            2
-                          )}</span>
-                          <button
-                            onclick="addToCart('${item.name}', '${restaurant.name}')"
-                            style="margin-left: 1rem; padding: 0.8rem 1.5rem; font-size: 1.6rem; color: #fff; background-color: var(--red); border: none; border-radius: 0.5rem; cursor: pointer;"
-                          >
-                            Add to Cart
-                          </button>
-                        </li>
-                      `
-                      )
-                      .join("")}
-                  </ul>
-                `;
-
-                container.appendChild(restaurantDiv);
-              });
-            }
-
-            function search() {
-              const searchInput = document.getElementById("searchInput");
-              if (!searchInput) return;
-              const searchTerm = searchInput.value.trim();
-              renderRestaurants(restaurantData, searchTerm);
-            }
+            return response.json();
+          })
+          .then((data) => {
+            alert("Order placed successfully!");
+            console.log("Response from server:", data);
+           // cart = []; // Clear the cart after successful order placement
+        //    renderCart(); // Refresh the cart display
+            window.location.href = "/delivery"; // Redirect to the delivery page
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("There was an error placing your order. Please try again.");
+          });
+      }
 
 
-            renderRestaurants(restaurantData, "");
+                  // Render Restaurants
+                  const container = document.querySelector(".restaurant-list");
+
+                  function renderRestaurants(data, searchTerm = "") {
+                    if (!container) return;
+
+                    const searchHTML = `
+                      <div style="margin-bottom: 2rem;">
+                        <input
+                          type="text"
+                          id="searchInput"
+                          placeholder="Search restaurants or food items..."
+                          style="width: 80%; padding: 1rem; font-size: 1.6rem; border: 2px solid #ddd; border-radius: 0.5rem; margin-bottom: 1rem;"
+                        >
+                        <button
+                          id="searchButton"
+                          style="padding: 1rem 2rem; font-size: 1.6rem; color: #fff; background-color: var(--red); border: none; border-radius: 0.5rem; cursor: pointer;"
+                          onclick="search()"
+                        >
+                          Search
+                        </button>
+                      </div>
+                    `;
+
+                    container.innerHTML = `
+                      <h2 style="font-size: 2.5rem; color: #333; margin-bottom: 1rem">Available Restaurants</h2>
+                      ${searchHTML}
+                    `;
+
+                    const filteredData = data.filter((restaurant) => {
+                      const restaurantNameMatch = restaurant.name
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase());
+                      const menuItemMatch = restaurant.menu.some((item) =>
+                        item.name.toLowerCase().includes(searchTerm.toLowerCase())
+                      );
+                      return restaurantNameMatch || menuItemMatch;
+                    });
+
+                    if (filteredData.length === 0) {
+                      container.innerHTML += `
+                        <p style="font-size: 1.8rem; color: #666; text-align: center;">
+                          No restaurants or food items found matching "${searchTerm}"
+                        </p>
+                      `;
+                      return;
+                    }
+
+                    filteredData.forEach((restaurant) => {
+                      const restaurantDiv = document.createElement("div");
+                      restaurantDiv.classList.add("restaurant");
+                      restaurantDiv.style.marginBottom = "2rem";
+
+                      restaurantDiv.innerHTML = `
+                   <a href="/review/${restaurant._id}">
+              <img
+                src="${restaurant.image}"
+                alt="${restaurant.name}"
+                style="width: 100%; border-radius: 0.5rem; margin-bottom: 1rem"
+              />
+              <h3 style="font-size: 2rem; color: var(--red); margin-bottom: 1rem">
+                ${restaurant.name}
+              </h3>
+            </a>
+                        <ul style="list-style: none; padding: 0">
+                          ${restaurant.menu
+                            .map(
+                              (item) => `
+                              <li style="margin-bottom: 1rem">
+                                <img
+                                  src="${item.image}"
+                                  alt="${item.name}"
+                                  style="width: 50px; height: 50px; object-fit: cover; border-radius: 0.5rem; margin-right: 0.5rem; vertical-align: middle;"
+                                />
+
+                                <span style="font-size: 1.7rem; color: #333">${item.name} - ₹${item.price.toFixed(
+                                  2
+                                )}</span>
+                                <button
+                                  onclick="addToCart('${item.name}', '${restaurant.name}')"
+                                  style="margin-left: 1rem; padding: 0.8rem 1.5rem; font-size: 1.6rem; color: #fff; background-color: var(--red); border: none; border-radius: 0.5rem; cursor: pointer;"
+                                >
+                                  Add to Cart
+                                </button>
+                              </li>
+                            `
+                            )
+                            .join("")}
+                        </ul>
+                      `;
+
+                      container.appendChild(restaurantDiv);
+                    });
+                  }
+
+                  function search() {
+                    const searchInput = document.getElementById("searchInput");
+                    if (!searchInput) return;
+                    const searchTerm = searchInput.value.trim();
+                    renderRestaurants(restaurantData, searchTerm);
+                  }
+
+
+                  renderRestaurants(restaurantData, "");
     </script>
   </body>
 </html>

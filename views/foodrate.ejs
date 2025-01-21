@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery Review</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+    <header class="bg-yellow-600 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <h1 class="text-3xl font-extrabold text-white">CraveKart</h1>
+            <nav>
+                <a href="index.html" class="text-lg font-medium px-6 hover:underline">Home</a>
+                <a href="#order" class="text-lg font-medium px-6 hover:underline">Orders</a>
+                <a href="#" class="text-lg font-medium px-6 hover:underline">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-10">
+        <h2 class="text-4xl font-semibold text-gray-800 mb-8">Your Delivered Items</h2>
+        
+        <!-- Food Items -->
+        <form id="feedback-form">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <% if (savedCart && savedCart.length > 0) { %>
+                    <% savedCart.forEach(item => { %>
+                        <div class="bg-white shadow-lg rounded-lg p-6 transform transition duration-300 hover:scale-105">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-2"><%= item.foodName %></h3>
+                            <p class="text-gray-600 mb-4">Restaurant: <%= item.restaurant %></p>
+                            <p class="text-gray-600 mb-4">Quantity: <%= item.quantity %></p>
+                            
+                            <label for="rating-<%= item.foodName.replace(/\s+/g, '-') %>" class="block text-gray-700 font-medium">Your Rating:</label>
+                            <select id="rating-<%= item.foodName.replace(/\s+/g, '-') %>" name="rating-<%= item.foodName.replace(/\s+/g, '-') %>" class="block w-full p-3 border rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                <option value="">Select Rating</option>
+                                <option value="5">5 - Excellent</option>
+                                <option value="4">4 - Good</option>
+                                <option value="3">3 - Average</option>
+                                <option value="2">2 - Poor</option>
+                                <option value="1">1 - Terrible</option>
+                            </select>
+                            
+                            <label for="feedback-<%= item.foodName.replace(/\s+/g, '-') %>" class="block text-gray-700 font-medium mt-4">Your Feedback:</label>
+                            <textarea id="feedback-<%= item.foodName.replace(/\s+/g, '-') %>" name="feedback-<%= item.foodName.replace(/\s+/g, '-') %>" rows="4" class="block w-full p-3 border rounded-lg mt-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </div>
+            
+            <!-- Submit All Feedback Button -->
+            <div class="text-center mt-8">
+                <button type="submit" class="bg-yellow-600 text-white px-6 py-3 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                    Submit All Feedback
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <footer class="bg-gray-900 text-white text-center py-6 mt-12">
+        <p class="text-sm">© 2024 Foodie's Delight. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Handle form submission
+        document.getElementById('feedback-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Collect all ratings and feedback
+            const feedbackData = [];
+            const formData = new FormData(event.target);
+            formData.forEach((value, key) => {
+                feedbackData.push({ question: key, answer: value });
+            });
+
+            // Here, you can send `feedbackData` to your backend (or just log it for now)
+            console.log(feedbackData);
+
+            // Show a success message
+            alert('Thank you for your feedback!');
+        });
+    </script>
+</body>
+</html>
